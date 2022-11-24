@@ -24,17 +24,14 @@ int main(void)
     SysCtlClockSet(SYSCTL_SYSDIV_4|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
 
     LCDInit();
+    SendCommandLCD(CLEAR_DISPLAY);
 
-    int delay = 1500;
+    volatile uint8_t data = ReadCommandLCD();
 
     while(1)
     {
-        delayMs(delay);
-        SendStringLCD("Hello Erik!");
-        delayMs(delay);
-        SendStringLCD("What's up buttercup Ohhhhh Yeaaaaaaaa!");
-        delayMs(delay);
-        SendStringLCD("Everything okay?");
+        data = ReadCommandLCD();
+
     }
 }
 

@@ -13,11 +13,8 @@ typedef struct node{
     int data;
 } node;
 
-void delayMs(unsigned int n);
-node* insertNodeAtTail(node* head, int data);
-
-
-
-
+extern void delayMs(uint32_t ui32Ms);
+extern void delayUs(uint32_t ui32Us);
+extern node* insertNodeAtTail(node* head, int data);
 
 #endif

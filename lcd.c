@@ -40,6 +40,17 @@ void LCDInit(){
     delayMs(2);
 
 }
+void CheckBusy(){
+
+    GPIOWrite(CMD_PORT, RW, RW);
+    GPIOWrite(CMD_PORT, RS, 0);
+    DigitalInputInit(DATA_PORT, 0xFF);
+
+    while(GPIORead(DATA_PORT, GPIO_PIN_7) != GPIO_PIN_7){}
+
+    DigitalOutputInit(DATA_PORT, 0xFF);
+
+}
 
 void SendCommandLCD(volatile uint8_t command){
 
@@ -51,7 +62,31 @@ void SendCommandLCD(volatile uint8_t command){
     delayMs(2);
 }
 
+uint8_t ReadCommandLCD(){
+
+    volatile uint8_t data = 0;
+
+    GPIOWrite(CMD_PORT, RW, RW);
+    GPIOWrite(CMD_PORT, RS, 0);
+    GPIOWrite(CMD_PORT, EN, 0);
+    DigitalInputInit(DATA_PORT, 0x000000FF);
+    delayUs(10);
+    GPIOWrite(CMD_PORT, EN, EN);
+    delayUs(10);
+
+    data = ReadGPIOData(DATA_PORT, 0xFF);
+    delayUs(10);
+    GPIOWrite(CMD_PORT, EN, 0);
+
+
+    DigitalOutputInit(DATA_PORT, 0x000000FF);
+
+    return data;
+}
+
 void SendCharLCD(volatile uint8_t character){
+
+    SendCommandLCD(CLEAR_DISPLAY);
 
     GPIOWrite(CMD_PORT, RS, RS);
     GPIOWrite(CMD_PORT, RW, 0x0);
@@ -80,7 +115,4 @@ void SendStringLCD(volatile uint8_t* string){
             SendCharLCD(string[x]);
         }
     }
-
-
-
 }

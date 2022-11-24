@@ -49,9 +49,7 @@ void DigitalInputInit(volatile uint32_t portBase, volatile uint8_t pins){
 
     //Enable digital pins
     REG_VAL((portBase + GPIO_DEN_R)) |= pins;
-
 }
-
 
 void DigitalOutputInit(volatile uint32_t portBase, volatile uint8_t pins){
 
@@ -84,7 +82,7 @@ void DigitalOutputInit(volatile uint32_t portBase, volatile uint8_t pins){
 
         REG_VAL(SYSCTL_RCGCGPIO_R) |= periphClock;
 
-        delayMs(5);
+        delayUs(10);
     }
 
     //Set Pin direction 1 for Output
@@ -114,27 +112,14 @@ bool GPIORead(volatile uint32_t PortBase, volatile uint8_t pins){
     return false;
 }
 
+uint32_t ReadGPIOData(volatile uint32_t PortBase, volatile uint8_t pins){
+    return REG_VAL((PortBase + (pins << 2)));
+}
+
 void GPIOToggle(volatile uint32_t PortBase, volatile uint8_t mask, volatile uint8_t pins){
 
     PortBase = PortBase + (mask << 2);
 
     REG_VAL(PortBase) ^= pins;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
