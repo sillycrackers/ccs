@@ -39,7 +39,7 @@ void DigitalInputInit(volatile uint32_t portBase, volatile uint8_t pins){
 
         REG_VAL(SYSCTL_RCGCGPIO_R) |= periphClock;
 
-        delayMs(5);
+        delayUs(10);
     }
     //Set Pin direction to 0 Input
     REG_VAL((portBase + GPIO_DIR_R)) &= ~pins;

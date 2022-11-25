@@ -25,19 +25,29 @@ int main(void)
 
     LCDInit();
     SendCommandLCD(CLEAR_DISPLAY);
+    SendCommandLCD(CURSOR_HOME_FIRST);
 
     volatile uint8_t data = ReadCommandLCD();
 
+    volatile uint32_t delay = 1500;
+
     while(1)
     {
-        data = ReadCommandLCD();
+        SendStringLCD("Hello");
+        delayMs(delay);
+        SendStringLCD("How are you?");
+        delayMs(delay);
+        SendStringLCD("Hotdog, Pizza, Sushi, Cake");
+        delayMs(delay);
+        SendStringLCD("123456789");
+        delayMs(delay);
 
     }
 }
 
 void SystemInit(void){
     //Grant coprocessor access
-    //This is requires since TM4C123G has a floating point coprocessor
+    //This is required since TM4C123G has a floating point coprocessor
     REG_VAL(NVIC_CPAC_R) |= 0x00F00000;
 }
 
