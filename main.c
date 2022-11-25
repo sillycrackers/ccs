@@ -24,23 +24,11 @@ int main(void)
     SysCtlClockSet(SYSCTL_SYSDIV_4|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
 
     LCDInit();
-    SendCommandLCD(CLEAR_DISPLAY);
-    SendCommandLCD(CURSOR_HOME_FIRST);
-
-    volatile uint8_t data = ReadCommandLCD();
 
     volatile uint32_t delay = 1500;
 
     while(1)
     {
-        SendStringLCD("Hello");
-        delayMs(delay);
-        SendStringLCD("How are you?");
-        delayMs(delay);
-        SendStringLCD("Hotdog, Pizza, Sushi, Cake");
-        delayMs(delay);
-        SendStringLCD("123456789");
-        delayMs(delay);
 
     }
 }

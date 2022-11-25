@@ -22,11 +22,32 @@
 
 */
 
+    volatile uint8_t bellMap[8] = {
+        0x04, 0X0E, 0X0E, 0X0E, 0X1F, 0X00, 0X04, 0X00
+    };
+    volatile uint8_t heartMap[8] = {
+        0x00, 0X1B, 0X1F, 0X1F, 0X0E, 0X04, 0X00, 0X00
+    };
+    volatile uint8_t stickManMap[8] = {
+        0xe, 0xe, 0x4, 0x1f, 0x4, 0xe, 0xa, 0x0
+    };
+    volatile uint8_t smileyFaceMap[8] = {
+        0x0, 0x0, 0xa, 0x0, 0x11, 0x11, 0xe, 0x0
+    };
+
+void SendCustomCharLCD(volatile uint8_t location, volatile uint8_t* data){
+
+    SendCommandLCD(0x40 + location);
+
+    for(int i = 0; i < 8; i++){
+        SendCharLCD(data[i]);
+    }
+}
+
 void LCDInit(){
 
     DigitalOutputInit(DATA_PORT, 0x000000FF);
     DigitalOutputInit(CMD_PORT, RS | RW | EN);
-
 
     SendCommandLCD(0x30); //8 Bit
     SendCommandLCD(0x30);
@@ -35,8 +56,14 @@ void LCDInit(){
     SendCommandLCD(0x06); //Set Cursor move direction to right
     SendCommandLCD(CLEAR_DISPLAY); //Clear Screen, move cursor to home
     SendCommandLCD(0x0E); //Turn on display, cursor not blinking
-    SendCommandLCD(CURSOR_HOME_FIRST);
 
+
+    SendCustomCharLCD(CGRAM_0, bellMap);
+    SendCustomCharLCD(CGRAM_1, heartMap);
+    SendCustomCharLCD(CGRAM_2, stickManMap);
+    SendCustomCharLCD(CGRAM_3, smileyFaceMap);
+
+    SendCommandLCD(CURSOR_HOME_FIRST);
 }
 void CheckBusy(){
 
@@ -97,9 +124,7 @@ void SendCharLCD(volatile uint8_t character){
 
 void SendStringLCD(volatile uint8_t* string){
 
-    uint16_t i;
-
-    SendCommandLCD(CLEAR_DISPLAY);
+    volatile uint16_t i;
 
     for(i = 0; string[i] != NULL && i <= 15; i++){
         SendCharLCD(string[i]);
