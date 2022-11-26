@@ -12,7 +12,6 @@
 //Pad Type:
 //0 - Pullup Resistor
 //1 - Pulldown Resistor
-//3 - Open-Drain
 void DigitalInputInit(volatile uint32_t portBase, volatile uint8_t pins, volatile uint8_t padType){
 
     volatile uint8_t periphClock;
@@ -58,26 +57,21 @@ void DigitalInputInit(volatile uint32_t portBase, volatile uint8_t pins, volatil
     //1 - Pulldown Resistor
     //3 - Open-Drain
 
-    switch(padType){
-    case 0:
+    if(padType == 0){
         //Turn on Pullup resistor
         REG_VAL((portBase + GPIO_PUR_R)) |= pins;
-        break;
-    case 1:
+    }else{
         //Turn on Pull Down resistor
         REG_VAL((portBase + GPIO_PDR_R)) |= pins;
-        break;
-    case 2:
-        //Turn on Open Drain
-        REG_VAL((portBase + GPIO_ODR_R)) |= pins;
-
     }
 
     //Enable digital pins
     REG_VAL((portBase + GPIO_DEN_R)) |= pins;
 }
 
-void DigitalOutputInit(volatile uint32_t portBase, volatile uint8_t pins){
+
+//openDrain 1 to enable 0 to disable
+void DigitalOutputInit(volatile uint32_t portBase, volatile uint8_t pins, volatile uint8_t openDrain){
 
     volatile uint8_t periphClock;
 
@@ -113,8 +107,16 @@ void DigitalOutputInit(volatile uint32_t portBase, volatile uint8_t pins){
 
     //Set Pin direction 1 for Output
     REG_VAL((portBase + GPIO_DIR_R)) |= pins;
+
+
+    if(openDrain == 1){
+        //Enable Open drain
+        REG_VAL((portBase + GPIO_ODR_R)) |= pins;
+    }
+
     //Enable digital pins
     REG_VAL((portBase + GPIO_DEN_R)) |= pins;
+
 
 }
 
@@ -127,7 +129,7 @@ void GPIOWrite(volatile uint32_t PortBase, volatile uint8_t mask, volatile uint8
 
 bool GPIORead(volatile uint32_t PortBase, volatile uint8_t pins){
 
-    uint32_t lastState = REG_VAL((PortBase + (pins << 2)));
+    volatile uint32_t lastState = REG_VAL((PortBase + (pins << 2)));
 
     if(lastState == 0){
         delayMs(20);
@@ -138,7 +140,7 @@ bool GPIORead(volatile uint32_t PortBase, volatile uint8_t pins){
     return false;
 }
 
-uint32_t ReadGPIOData(volatile uint32_t PortBase, volatile uint8_t pins){
+uint32_t GPIOReadData(volatile uint32_t PortBase, volatile uint8_t pins){
     return REG_VAL((PortBase + (pins << 2)));
 }
 

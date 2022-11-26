@@ -46,8 +46,8 @@ void SendCustomCharLCD(volatile uint8_t location, volatile uint8_t* data){
 
 void LCDInit(){
 
-    DigitalOutputInit(DATA_PORT, 0x000000FF);
-    DigitalOutputInit(CMD_PORT, RS | RW | EN);
+    DigitalOutputInit(DATA_PORT, 0x000000FF, 0);
+    DigitalOutputInit(CMD_PORT, RS | RW | EN, 0);
 
     SendCommandLCD(0x30); //8 Bit
     SendCommandLCD(0x30);
@@ -73,11 +73,11 @@ void CheckBusy(){
     GPIOWrite(CMD_PORT, EN, 0);
     GPIOWrite(CMD_PORT, EN, EN);
 
-    while(ReadGPIOData(DATA_PORT, GPIO_PIN_7) == GPIO_PIN_7){
+    while(GPIOReadData(DATA_PORT, GPIO_PIN_7) == GPIO_PIN_7){
 
     }
     GPIOWrite(CMD_PORT, EN, 0);
-    DigitalOutputInit(DATA_PORT, GPIO_PIN_7);
+    DigitalOutputInit(DATA_PORT, GPIO_PIN_7, 0);
 
 }
 
@@ -102,12 +102,12 @@ uint8_t ReadCommandLCD(){
     GPIOWrite(CMD_PORT, EN, EN);
     delayUs(10);
 
-    data = ReadGPIOData(DATA_PORT, 0xFF);
+    data = GPIOReadData(DATA_PORT, 0xFF);
     delayUs(10);
     GPIOWrite(CMD_PORT, EN, 0);
 
 
-    DigitalOutputInit(DATA_PORT, 0x000000FF);
+    DigitalOutputInit(DATA_PORT, 0x000000FF, 0);
 
     return data;
 }
