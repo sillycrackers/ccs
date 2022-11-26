@@ -19,7 +19,8 @@
 
 extern void KeypadInit();
 extern uint8_t ScanKeypad();
-bool KeyPressed(uint32_t column);
+extern bool KeyPressed(uint32_t column);
+extern void Password();
 
 extern volatile uint32_t rowArray[4];
 
