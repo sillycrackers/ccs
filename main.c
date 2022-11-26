@@ -27,6 +27,8 @@ int main(void)
 
     volatile uint32_t delay = 1500;
 
+    SendStringLCD("Hello, we still good?");
+
     while(1)
     {
 

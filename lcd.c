@@ -69,7 +69,7 @@ void CheckBusy(){
 
     GPIOWrite(CMD_PORT, RW, RW);
     GPIOWrite(CMD_PORT, RS, 0);
-    DigitalInputInit(DATA_PORT, GPIO_PIN_7);
+    DigitalInputInit(DATA_PORT, GPIO_PIN_7, 1);
     GPIOWrite(CMD_PORT, EN, 0);
     GPIOWrite(CMD_PORT, EN, EN);
 
@@ -77,7 +77,7 @@ void CheckBusy(){
 
     }
     GPIOWrite(CMD_PORT, EN, 0);
-    DigitalOutputInit(DATA_PORT, 0xFF);
+    DigitalOutputInit(DATA_PORT, GPIO_PIN_7);
 
 }
 
@@ -97,7 +97,7 @@ uint8_t ReadCommandLCD(){
     GPIOWrite(CMD_PORT, RW, RW);
     GPIOWrite(CMD_PORT, RS, 0);
     GPIOWrite(CMD_PORT, EN, 0);
-    DigitalInputInit(DATA_PORT, 0x000000FF);
+    DigitalInputInit(DATA_PORT, 0x000000FF, 1);
     delayUs(10);
     GPIOWrite(CMD_PORT, EN, EN);
     delayUs(10);

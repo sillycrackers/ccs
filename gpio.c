@@ -8,7 +8,12 @@
 #include "helpers.h"
 #include "tm4c123gh6pm.h"
 
-void DigitalInputInit(volatile uint32_t portBase, volatile uint8_t pins){
+//Digital Input Init
+//Pad Type:
+//0 - Pullup Resistor
+//1 - Pulldown Resistor
+//3 - Open-Drain
+void DigitalInputInit(volatile uint32_t portBase, volatile uint8_t pins, volatile uint8_t padType){
 
     volatile uint8_t periphClock;
 
@@ -44,8 +49,29 @@ void DigitalInputInit(volatile uint32_t portBase, volatile uint8_t pins){
     //Set Pin direction to 0 Input
     REG_VAL((portBase + GPIO_DIR_R)) &= ~pins;
 
-    //Turn on Pullup resistor
-    REG_VAL((portBase + GPIO_PUR_R)) |= pins;
+
+
+    // Pullup Resistor - GPIO_PUR_R
+    // Pull down resistor - GPIO_PDR_R
+    // Open drain - GPIO_ODR_R
+    //0 - Pullup Resistor
+    //1 - Pulldown Resistor
+    //3 - Open-Drain
+
+    switch(padType){
+    case 0:
+        //Turn on Pullup resistor
+        REG_VAL((portBase + GPIO_PUR_R)) |= pins;
+        break;
+    case 1:
+        //Turn on Pull Down resistor
+        REG_VAL((portBase + GPIO_PDR_R)) |= pins;
+        break;
+    case 2:
+        //Turn on Open Drain
+        REG_VAL((portBase + GPIO_ODR_R)) |= pins;
+
+    }
 
     //Enable digital pins
     REG_VAL((portBase + GPIO_DEN_R)) |= pins;
