@@ -24,7 +24,7 @@
 
 //*****************************************************************************
 //
-// GPIO General Port Offsets
+// GPIO General Port Offsets - By Erik Westerveld
 //
 //*****************************************************************************
 
@@ -171,7 +171,7 @@
 // GPIO registers (PORTA)
 //
 //*****************************************************************************
-#define GPIO_PORTA_BASE  0x40004000
+#define GPIO_PORTA_BASE         0x40004000
 #define GPIO_PORTA_DATA_R       0x400043FC
 #define GPIO_PORTA_DIR_R        0x40004400
 #define GPIO_PORTA_IS_R         0x40004404
@@ -233,7 +233,7 @@
 // GPIO registers (PORTC)
 //
 //*****************************************************************************
-#define GPIO_PORTC_BASE  0x40006000
+#define GPIO_PORTC_BASE         0x40006000
 #define GPIO_PORTC_DATA_R       0x400063FC
 #define GPIO_PORTC_DIR_R        0x40006400
 #define GPIO_PORTC_IS_R         0x40006404
@@ -264,7 +264,7 @@
 // GPIO registers (PORTD)
 //
 //*****************************************************************************
-#define GPIO_PORTD_BASE  0x40007000
+#define GPIO_PORTD_BASE         0x40007000
 #define GPIO_PORTD_DATA_R       0x400073FC
 #define GPIO_PORTD_DIR_R        0x40007400
 #define GPIO_PORTD_IS_R         0x40007404
@@ -357,6 +357,32 @@
 #define SSI3_ICR_R              0x4000B020
 #define SSI3_DMACTL_R           0x4000B024
 #define SSI3_CC_R               0x4000BFC8
+
+//*****************************************************************************
+//
+// UART General Port Offsets - By Erik Westerveld
+//
+//*****************************************************************************
+
+#define UART_RSR_R             0x00000004
+#define UART_ECR_R             0x00000004
+#define UART_FR_R              0x00000018
+#define UART_ILPR_R            0x00000020
+#define UART_IBRD_R            0x00000024
+#define UART_FBRD_R            0x00000028
+#define UART_LCRH_R            0x0000002C
+#define UART_CTL_R             0x00000030
+#define UART_IFLS_R            0x00000034
+#define UART_IM_R              0x00000038
+#define UART_RIS_R             0x0000003C
+#define UART_MIS_R             0x00000040
+#define UART_ICR_R             0x00000044
+#define UART_DMACTL_R          0x00000048
+#define UART_9BITADDR_R        0x000000A4
+#define UART_9BITAMASK_R       0x000000A8
+#define UART_PP_R              0x00000FC0
+#define UART_CC_R              0x00000FC8
+
 
 //*****************************************************************************
 //

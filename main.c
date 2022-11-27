@@ -11,6 +11,7 @@
 #include "tm4c123gh6pm.h"
 #include "helpers.h"
 #include "keypad.h"
+#include "uart.h"
 
 #ifdef DEBUG
 void
@@ -25,13 +26,14 @@ int main(void)
     //50 MHz
     SysCtlClockSet(SYSCTL_SYSDIV_4|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
 
-    LCDInit();
-    KeypadInit();
+    //LCDInit();
+    //KeypadInit();
 
     volatile uint32_t delay = 1500;
 
+
     while(1){
-        Password();
+
     }
 
 }
