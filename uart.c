@@ -22,41 +22,49 @@ void UartInit(uint8_t modNum, uint32_t baudrate){
     //Set UART port base based ON modNum and Enable corresponding GPIO system clock
     switch(modNum){
     case 0:
+        //Port A
         portBase = UART0_DR_R;
         REG_VAL(SYSCTL_RCGCGPIO_R) |= BIT_0;
         delayUs(10);
         break;
     case 1:
+        //Port B
         portBase = UART1_DR_R;
         REG_VAL(SYSCTL_RCGCGPIO_R) |= BIT_1;
         delayUs(10);
         break;
     case 2:
+        //Port D
         portBase = UART2_DR_R;
         REG_VAL(SYSCTL_RCGCGPIO_R) |= BIT_3;
         delayUs(10);
         break;
     case 3:
+        //Port C
         portBase = UART3_DR_R;
         REG_VAL(SYSCTL_RCGCGPIO_R) |= BIT_2;
         delayUs(10);
         break;
     case 4:
+        //Port C
         portBase = UART4_DR_R;
         REG_VAL(SYSCTL_RCGCGPIO_R) |= BIT_2;
         delayUs(10);
         break;
     case 5:
+        //Port E
         portBase = UART5_DR_R;
         REG_VAL(SYSCTL_RCGCGPIO_R) |= BIT_4;
         delayUs(10);
         break;
     case 6:
+        //Port D
         portBase = UART6_DR_R;
         REG_VAL(SYSCTL_RCGCGPIO_R) |= BIT_3;
         delayUs(10);
         break;
     case 7:
+        //Port E
         portBase = UART7_DR_R;
         REG_VAL(SYSCTL_RCGCGPIO_R) |= BIT_4;
         delayUs(10);
@@ -78,7 +86,66 @@ void UartInit(uint8_t modNum, uint32_t baudrate){
     REG_VAL((portBase + UART_FBRD_R)) = _getFracDivisor(baudrate);
 
     //Select System Clock as UART clock source
-    REG_VAL((portBase + UART_CC_R))
+    REG_VAL((portBase + UART_CC_R)) = 0;
+
+    //Setup UART Line Control Registor, data length, parity, # of stop bits, and fifo
+    REG_VAL((portBase + UART_CC_R)) = UART_LCRH_WLEN_8;
+
+    //Enable UART, TXE, RXE
+    REG_VAL((portBase + UART_CTL_R)) = UART_CTL_UARTEN | UART_CTL_TXE | UART_CTL_RXE;
+
+    //Enable digital pin, Setup GPIO Alternate function, Configure GPIO pins for UART
+    switch(modNum){
+    case 0:
+        //Port A pins 0 and 1
+        REG_VAL((GPIO_PORTA_BASE + GPIO_DEN_R)) |= GPIO_PIN_0 | GPIO_PIN_1;
+        REG_VAL((GPIO_PORTA_BASE + GPIO_AFSEL_R)) = GPIO_PIN_0 | GPIO_PIN_1;
+        REG_VAL((GPIO_PORTA_BASE + GPIO_PCTL_R)) = 0x11;
+        break;
+    case 1:
+        //Port B pins 0 and 1
+        REG_VAL((GPIO_PORTB_BASE + GPIO_DEN_R)) |= GPIO_PIN_0 | GPIO_PIN_1;
+        REG_VAL((GPIO_PORTB_BASE + GPIO_AFSEL_R)) |= GPIO_PIN_0 | GPIO_PIN_1;
+        REG_VAL((GPIO_PORTB_BASE + GPIO_PCTL_R)) = 0x11;
+        break;
+    case 2:
+        //Port D pins 6 and 7
+        REG_VAL((GPIO_PORTD_BASE + GPIO_DEN_R)) |= GPIO_PIN_6 | GPIO_PIN_7;
+        REG_VAL((GPIO_PORTD_BASE + GPIO_AFSEL_R)) |= GPIO_PIN_6 | GPIO_PIN_7;
+        REG_VAL((GPIO_PORTD_BASE + GPIO_PCTL_R)) = 0x11000000;
+        break;
+    case 3:
+        //Port C pins 6 and 7
+        REG_VAL((GPIO_PORTC_BASE + GPIO_DEN_R)) |= GPIO_PIN_6 | GPIO_PIN_7;
+        REG_VAL((GPIO_PORTC_BASE + GPIO_AFSEL_R)) |= GPIO_PIN_6 | GPIO_PIN_7;
+        REG_VAL((GPIO_PORTC_BASE + GPIO_PCTL_R)) = 11000000;
+        break;
+    case 4:
+        //Port C pins 4 and 5
+        REG_VAL((GPIO_PORTC_BASE + GPIO_DEN_R)) |= GPIO_PIN_4 | GPIO_PIN_5;
+        REG_VAL((GPIO_PORTC_BASE + GPIO_AFSEL_R)) |= GPIO_PIN_4 | GPIO_PIN_5;
+        REG_VAL((GPIO_PORTC_BASE + GPIO_PCTL_R)) = 110000;
+        break;
+    case 5:
+        //Port E pins 4 and 5
+        REG_VAL((GPIO_PORTE_BASE + GPIO_DEN_R)) |= GPIO_PIN_4 | GPIO_PIN_5;
+        REG_VAL((GPIO_PORTE_BASE + GPIO_AFSEL_R)) |= GPIO_PIN_4 | GPIO_PIN_5;
+        REG_VAL((GPIO_PORTE_BASE + GPIO_PCTL_R)) = 110000;
+        break;
+    case 6:
+        //Port D pins 4 and 5
+        REG_VAL((GPIO_PORTD_BASE + GPIO_DEN_R)) |= GPIO_PIN_4 | GPIO_PIN_5;
+        REG_VAL((GPIO_PORTD_BASE + GPIO_AFSEL_R)) |= GPIO_PIN_4 | GPIO_PIN_5;
+        REG_VAL((GPIO_PORTD_BASE + GPIO_PCTL_R)) =110000 ;
+        break;
+    case 7:
+        //Port E pins 0 and 1
+        REG_VAL((GPIO_PORTE_BASE + GPIO_DEN_R)) |= GPIO_PIN_0 | GPIO_PIN_1;
+        REG_VAL((GPIO_PORTE_BASE + GPIO_AFSEL_R)) |= GPIO_PIN_0 | GPIO_PIN_1;
+        REG_VAL((GPIO_PORTE_BASE + GPIO_PCTL_R)) = 0x11;
+    }
+
+    delayMs(1);
 }
 
 

@@ -4,7 +4,7 @@
 
 extern uint32_t _getFracDivisor(volatile uint32_t baud);
 extern uint32_t _getIntDivisor(volatile uint32_t baud);
-extern void UartInit(uint8_t modNum, uint32_t portBase);
+extern void UartInit(uint8_t modNum, uint32_t baudrate);
 
 
 
