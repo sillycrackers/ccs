@@ -164,6 +164,20 @@ void UARTSendChar(volatile uint8_t modNum, volatile uint8_t character){
     REG_VAL(portBase) = character;
 }
 
+char UARTReadChar(volatile uint8_t modNum){
+
+    volatile uint32_t portBase = _getUARTPortbase(modNum);
+
+    //Wait until Rx buffer not full
+    while(REG_VAL((portBase + UART_FR_R)) & 0x10){}
+
+    return(REG_VAL(portBase));
+}
+
+void UARTEcho(volatile uint8_t modNum, char input){
+    UARTSendChar(0, input);
+}
+
 void UARTSendString(volatile uint8_t modNum, volatile uint8_t* string){
 
     volatile uint8_t i = 0;
@@ -171,7 +185,6 @@ void UARTSendString(volatile uint8_t modNum, volatile uint8_t* string){
     while(string[i] != NULL){
         UARTSendChar(modNum, string[i]);
         i++;
-        //delayMs(1);
     }
 }
 

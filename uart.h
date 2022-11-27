@@ -11,7 +11,8 @@ extern uint32_t _getUARTPortbase(uint8_t modNum);
 extern void UartInit(volatile uint8_t modNum, volatile uint32_t baudrate);
 extern void  UARTSendChar(volatile uint8_t modNum, volatile uint8_t character);
 extern void UARTSendString(volatile uint8_t modNum, volatile uint8_t* string);
-
+extern char UARTReadChar(volatile uint8_t modNum);
+void UARTEcho(volatile uint8_t modNum, char input);
 
 
 

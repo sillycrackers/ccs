@@ -26,20 +26,30 @@ int main(void)
     //50 MHz
     SysCtlClockSet(SYSCTL_SYSDIV_4|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
 
-    //LCDInit();
+    LCDInit();
     //KeypadInit();
     UartInit(0, 115200);
 
     volatile uint32_t delay = 1500;
-    char str[15];
+    char input;
+    uint8_t count = 0;
+
+    UARTSendChar(0,'>');
 
     while(1){
-        for(uint32_t i = 0; i < 40000000; i++){
-            sprintf(str,"%u", i);
-            UARTSendString(0, (uint8_t*)str);
-            UARTSendChar(0, '\n');
-            UARTSendChar(0, '\r');
+        input = UARTReadChar(0);
+        UARTSendChar(0, input);
+        if(count == 16){
+            SendCommandLCD(CURSOR_HOME_SECOND);
         }
+        count++;
+        if(count > 32){
+            SendCommandLCD(CLEAR_DISPLAY);
+            SendCommandLCD(CURSOR_HOME_FIRST);
+            count = 0;
+        }
+        SendCharLCD(input);
+
     }
 
 }
