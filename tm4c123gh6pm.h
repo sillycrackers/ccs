@@ -1048,201 +1048,48 @@
 
 //*****************************************************************************
 //
-// Timer registers (TIMER0)
+// General Timer port offsets
+//
+//*****************************************************************************
+#define CFG_R            0X00000000
+#define TAMR_R           0X00000004
+#define TBMR_R           0X00000008
+#define CTL_R            0X0000000C
+#define SYNC_R           0X00000010
+#define IMR_R            0X00000018
+#define RIS_R            0X0000001C
+#define MIS_R            0X00000020
+#define ICR_R            0X00000024
+#define TAILR_R          0X00000028
+#define TBILR_R          0X0000002C
+#define TAMATCHR_R       0X00000030
+#define TBMATCHR_R       0X00000034
+#define TAPR_R           0X00000038
+#define TBPR_R           0X0000003C
+#define TAPMR_R          0X00000040
+#define TBPMR_R          0X00000044
+#define TAR_R            0X00000048
+#define TBR_R            0X0000004C
+#define TAV_R            0X00000050
+#define TBV_R            0X00000054
+#define RTCPD_R          0X00000058
+#define TAPS_R           0X0000005C
+#define TBPS_R           0X00000060
+#define TAPV_R           0X00000064
+#define TBPV_R           0X00000068
+#define PP_R             0X00000FC0
+
+//*****************************************************************************
+//
+// Timer base addresses
 //
 //*****************************************************************************
 #define TIMER0_CFG_R            0x40030000
-#define TIMER0_TAMR_R           0x40030004
-#define TIMER0_TBMR_R           0x40030008
-#define TIMER0_CTL_R            0x4003000C
-#define TIMER0_SYNC_R           0x40030010
-#define TIMER0_IMR_R            0x40030018
-#define TIMER0_RIS_R            0x4003001C
-#define TIMER0_MIS_R            0x40030020
-#define TIMER0_ICR_R            0x40030024
-#define TIMER0_TAILR_R          0x40030028
-#define TIMER0_TBILR_R          0x4003002C
-#define TIMER0_TAMATCHR_R       0x40030030
-#define TIMER0_TBMATCHR_R       0x40030034
-#define TIMER0_TAPR_R           0x40030038
-#define TIMER0_TBPR_R           0x4003003C
-#define TIMER0_TAPMR_R          0x40030040
-#define TIMER0_TBPMR_R          0x40030044
-#define TIMER0_TAR_R            0x40030048
-#define TIMER0_TBR_R            0x4003004C
-#define TIMER0_TAV_R            0x40030050
-#define TIMER0_TBV_R            0x40030054
-#define TIMER0_RTCPD_R          0x40030058
-#define TIMER0_TAPS_R           0x4003005C
-#define TIMER0_TBPS_R           0x40030060
-#define TIMER0_TAPV_R           0x40030064
-#define TIMER0_TBPV_R           0x40030068
-#define TIMER0_PP_R             0x40030FC0
-
-//*****************************************************************************
-//
-// Timer registers (TIMER1)
-//
-//*****************************************************************************
 #define TIMER1_CFG_R            0x40031000
-#define TIMER1_TAMR_R           0x40031004
-#define TIMER1_TBMR_R           0x40031008
-#define TIMER1_CTL_R            0x4003100C
-#define TIMER1_SYNC_R           0x40031010
-#define TIMER1_IMR_R            0x40031018
-#define TIMER1_RIS_R            0x4003101C
-#define TIMER1_MIS_R            0x40031020
-#define TIMER1_ICR_R            0x40031024
-#define TIMER1_TAILR_R          0x40031028
-#define TIMER1_TBILR_R          0x4003102C
-#define TIMER1_TAMATCHR_R       0x40031030
-#define TIMER1_TBMATCHR_R       0x40031034
-#define TIMER1_TAPR_R           0x40031038
-#define TIMER1_TBPR_R           0x4003103C
-#define TIMER1_TAPMR_R          0x40031040
-#define TIMER1_TBPMR_R          0x40031044
-#define TIMER1_TAR_R            0x40031048
-#define TIMER1_TBR_R            0x4003104C
-#define TIMER1_TAV_R            0x40031050
-#define TIMER1_TBV_R            0x40031054
-#define TIMER1_RTCPD_R          0x40031058
-#define TIMER1_TAPS_R           0x4003105C
-#define TIMER1_TBPS_R           0x40031060
-#define TIMER1_TAPV_R           0x40031064
-#define TIMER1_TBPV_R           0x40031068
-#define TIMER1_PP_R             0x40031FC0
-
-//*****************************************************************************
-//
-// Timer registers (TIMER2)
-//
-//*****************************************************************************
 #define TIMER2_CFG_R            0x40032000
-#define TIMER2_TAMR_R           0x40032004
-#define TIMER2_TBMR_R           0x40032008
-#define TIMER2_CTL_R            0x4003200C
-#define TIMER2_SYNC_R           0x40032010
-#define TIMER2_IMR_R            0x40032018
-#define TIMER2_RIS_R            0x4003201C
-#define TIMER2_MIS_R            0x40032020
-#define TIMER2_ICR_R            0x40032024
-#define TIMER2_TAILR_R          0x40032028
-#define TIMER2_TBILR_R          0x4003202C
-#define TIMER2_TAMATCHR_R       0x40032030
-#define TIMER2_TBMATCHR_R       0x40032034
-#define TIMER2_TAPR_R           0x40032038
-#define TIMER2_TBPR_R           0x4003203C
-#define TIMER2_TAPMR_R          0x40032040
-#define TIMER2_TBPMR_R          0x40032044
-#define TIMER2_TAR_R            0x40032048
-#define TIMER2_TBR_R            0x4003204C
-#define TIMER2_TAV_R            0x40032050
-#define TIMER2_TBV_R            0x40032054
-#define TIMER2_RTCPD_R          0x40032058
-#define TIMER2_TAPS_R           0x4003205C
-#define TIMER2_TBPS_R           0x40032060
-#define TIMER2_TAPV_R           0x40032064
-#define TIMER2_TBPV_R           0x40032068
-#define TIMER2_PP_R             0x40032FC0
-
-//*****************************************************************************
-//
-// Timer registers (TIMER3)
-//
-//*****************************************************************************
 #define TIMER3_CFG_R            0x40033000
-#define TIMER3_TAMR_R           0x40033004
-#define TIMER3_TBMR_R           0x40033008
-#define TIMER3_CTL_R            0x4003300C
-#define TIMER3_SYNC_R           0x40033010
-#define TIMER3_IMR_R            0x40033018
-#define TIMER3_RIS_R            0x4003301C
-#define TIMER3_MIS_R            0x40033020
-#define TIMER3_ICR_R            0x40033024
-#define TIMER3_TAILR_R          0x40033028
-#define TIMER3_TBILR_R          0x4003302C
-#define TIMER3_TAMATCHR_R       0x40033030
-#define TIMER3_TBMATCHR_R       0x40033034
-#define TIMER3_TAPR_R           0x40033038
-#define TIMER3_TBPR_R           0x4003303C
-#define TIMER3_TAPMR_R          0x40033040
-#define TIMER3_TBPMR_R          0x40033044
-#define TIMER3_TAR_R            0x40033048
-#define TIMER3_TBR_R            0x4003304C
-#define TIMER3_TAV_R            0x40033050
-#define TIMER3_TBV_R            0x40033054
-#define TIMER3_RTCPD_R          0x40033058
-#define TIMER3_TAPS_R           0x4003305C
-#define TIMER3_TBPS_R           0x40033060
-#define TIMER3_TAPV_R           0x40033064
-#define TIMER3_TBPV_R           0x40033068
-#define TIMER3_PP_R             0x40033FC0
-
-//*****************************************************************************
-//
-// Timer registers (TIMER4)
-//
-//*****************************************************************************
 #define TIMER4_CFG_R            0x40034000
-#define TIMER4_TAMR_R           0x40034004
-#define TIMER4_TBMR_R           0x40034008
-#define TIMER4_CTL_R            0x4003400C
-#define TIMER4_SYNC_R           0x40034010
-#define TIMER4_IMR_R            0x40034018
-#define TIMER4_RIS_R            0x4003401C
-#define TIMER4_MIS_R            0x40034020
-#define TIMER4_ICR_R            0x40034024
-#define TIMER4_TAILR_R          0x40034028
-#define TIMER4_TBILR_R          0x4003402C
-#define TIMER4_TAMATCHR_R       0x40034030
-#define TIMER4_TBMATCHR_R       0x40034034
-#define TIMER4_TAPR_R           0x40034038
-#define TIMER4_TBPR_R           0x4003403C
-#define TIMER4_TAPMR_R          0x40034040
-#define TIMER4_TBPMR_R          0x40034044
-#define TIMER4_TAR_R            0x40034048
-#define TIMER4_TBR_R            0x4003404C
-#define TIMER4_TAV_R            0x40034050
-#define TIMER4_TBV_R            0x40034054
-#define TIMER4_RTCPD_R          0x40034058
-#define TIMER4_TAPS_R           0x4003405C
-#define TIMER4_TBPS_R           0x40034060
-#define TIMER4_TAPV_R           0x40034064
-#define TIMER4_TBPV_R           0x40034068
-#define TIMER4_PP_R             0x40034FC0
-
-//*****************************************************************************
-//
-// Timer registers (TIMER5)
-//
-//*****************************************************************************
 #define TIMER5_CFG_R            0x40035000
-#define TIMER5_TAMR_R           0x40035004
-#define TIMER5_TBMR_R           0x40035008
-#define TIMER5_CTL_R            0x4003500C
-#define TIMER5_SYNC_R           0x40035010
-#define TIMER5_IMR_R            0x40035018
-#define TIMER5_RIS_R            0x4003501C
-#define TIMER5_MIS_R            0x40035020
-#define TIMER5_ICR_R            0x40035024
-#define TIMER5_TAILR_R          0x40035028
-#define TIMER5_TBILR_R          0x4003502C
-#define TIMER5_TAMATCHR_R       0x40035030
-#define TIMER5_TBMATCHR_R       0x40035034
-#define TIMER5_TAPR_R           0x40035038
-#define TIMER5_TBPR_R           0x4003503C
-#define TIMER5_TAPMR_R          0x40035040
-#define TIMER5_TBPMR_R          0x40035044
-#define TIMER5_TAR_R            0x40035048
-#define TIMER5_TBR_R            0x4003504C
-#define TIMER5_TAV_R            0x40035050
-#define TIMER5_TBV_R            0x40035054
-#define TIMER5_RTCPD_R          0x40035058
-#define TIMER5_TAPS_R           0x4003505C
-#define TIMER5_TBPS_R           0x40035060
-#define TIMER5_TAPV_R           0x40035064
-#define TIMER5_TBPV_R           0x40035068
-#define TIMER5_PP_R             0x40035FC0
 
 //*****************************************************************************
 //
