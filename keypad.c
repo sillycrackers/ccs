@@ -1,3 +1,6 @@
+// Copyright (c) 2022 Erik Westerveld Incorporated.  All rights reserved.
+// Software License Agreement
+
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -49,7 +52,7 @@ uint8_t ScanKeypad(){
     }
     return 0;
 }
-bool KeyPressed(uint32_t column){
+bool KeyPressed(volatile uint32_t column){
 
     if(GPIORead(COL_PORT, column)){
         while(GPIORead(COL_PORT, column) != false){

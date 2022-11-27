@@ -1,3 +1,6 @@
+// Copyright (c) 2022 Erik Westerveld Incorporated.  All rights reserved.
+// Software License Agreement
+
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>

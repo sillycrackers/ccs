@@ -1,3 +1,6 @@
+// Copyright (c) 2022 Erik Westerveld Incorporated.  All rights reserved.
+// Software License Agreement
+
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -9,15 +12,18 @@
 #include "gpio.h"
 #include "helpers.h"
 #include "tm4c123gh6pm.h"
+#include "uart.h"
+
+
 
 //modNum: Select which UART module to enable from 0 - 7
-//portBase: Base address of the UART port ex.. UART0 = UART0_DR_R  = 0x4000C000
 //baudrate: baudRate of UART ex.. 4800, 9600, 57600, 115200
-void UartInit(uint8_t modNum, uint32_t baudrate){
+void UartInit(volatile uint8_t modNum, volatile uint32_t baudrate){
 
     assert(modNum < 8);
 
-    uint32_t portBase;
+    //Base address of the UART port ex.. UART0 = UART0_DR_R  = 0x4000C000
+    volatile uint32_t portBase;
 
     //Set UART port base based ON modNum and Enable corresponding GPIO system clock
     switch(modNum){
@@ -80,7 +86,7 @@ void UartInit(uint8_t modNum, uint32_t baudrate){
     REG_VAL((portBase + UART_CTL_R)) = 0;
 
     //Set Baudrate Integer Divisor
-    REG_VAL((portBase + UART_IBRD_R)) = _getIndDivisor(baudrate);
+    REG_VAL((portBase + UART_IBRD_R)) = _getIntDivisor(baudrate);
 
     //Set Baudrate Fractional Divisor
     REG_VAL((portBase + UART_FBRD_R)) = _getFracDivisor(baudrate);
@@ -89,7 +95,7 @@ void UartInit(uint8_t modNum, uint32_t baudrate){
     REG_VAL((portBase + UART_CC_R)) = 0;
 
     //Setup UART Line Control Registor, data length, parity, # of stop bits, and fifo
-    REG_VAL((portBase + UART_CC_R)) = UART_LCRH_WLEN_8;
+    REG_VAL((portBase + UART_LCRH_R)) = UART_LCRH_WLEN_8;
 
     //Enable UART, TXE, RXE
     REG_VAL((portBase + UART_CTL_R)) = UART_CTL_UARTEN | UART_CTL_TXE | UART_CTL_RXE;
@@ -148,6 +154,71 @@ void UartInit(uint8_t modNum, uint32_t baudrate){
     delayMs(1);
 }
 
+void UARTSendChar(volatile uint8_t modNum, volatile uint8_t character){
+
+    volatile uint32_t portBase = _getUARTPortbase(modNum);
+
+    //Wait until Tx buffer not full
+    while(REG_VAL((portBase + UART_FR_R)) & 0x20){}
+
+    REG_VAL(portBase) = character;
+}
+
+void UARTSendString(volatile uint8_t modNum, volatile uint8_t* string){
+
+    volatile uint8_t i = 0;
+
+    while(string[i] != NULL){
+        UARTSendChar(modNum, string[i]);
+        i++;
+        //delayMs(1);
+    }
+}
+
+uint32_t _getUARTPortbase(uint8_t modNum){
+
+    assert(modNum < 8);
+
+    //Base address of the UART port ex.. UART0 = UART0_DR_R  = 0x4000C000
+    volatile uint32_t portBase;
+
+    //Set UART port base based ON modNum and Enable corresponding GPIO system clock
+    switch(modNum){
+    case 0:
+        //Port A
+        portBase = UART0_DR_R;
+        break;
+    case 1:
+        //Port B
+        portBase = UART1_DR_R;
+        break;
+    case 2:
+        //Port D
+        portBase = UART2_DR_R;
+        break;
+    case 3:
+        //Port C
+        portBase = UART3_DR_R;
+        break;
+    case 4:
+        //Port C
+        portBase = UART4_DR_R;
+        break;
+    case 5:
+        //Port E
+        portBase = UART5_DR_R;
+        break;
+    case 6:
+        //Port D
+        portBase = UART6_DR_R;
+        break;
+    case 7:
+        //Port E
+        portBase = UART7_DR_R;
+    }
+
+    return portBase;
+}
 
 //Calculate Integer Baud-Rate Divisor for register UARTIBRD
 uint32_t _getIntDivisor(volatile uint32_t baud){

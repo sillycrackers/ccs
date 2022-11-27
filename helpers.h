@@ -1,6 +1,7 @@
 #include <stdint.h>
 
-
+// Copyright (c) 2022 Erik Westerveld Incorporated.  All rights reserved.
+// Software License Agreement
 #ifndef __HELPERS_H__
 #define __HELPERS_H__
 
@@ -22,8 +23,9 @@ typedef struct node{
     int data;
 } node;
 
-extern void delayMs(uint32_t ui32Ms);
-extern void delayUs(uint32_t ui32Us);
+extern void delayMs(volatile uint32_t ui32Ms);
+extern void delayUs(volatile uint32_t ui32Us);
 extern node* insertNodeAtTail(node* head, int data);
+extern uint32_t GetNumberOfDigits(volatile uint32_t i);
 
 #endif

@@ -1,3 +1,5 @@
+// Copyright (c) 2022 Erik Westerveld Incorporated.  All rights reserved.
+// Software License Agreement
 
 #ifndef __LCD_H__
 #define __LCD_H__

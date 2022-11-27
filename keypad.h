@@ -1,3 +1,6 @@
+// Copyright (c) 2022 Erik Westerveld Incorporated.  All rights reserved.
+// Software License Agreement
+
 #ifndef __KEYPAD_H__
 #define __KEYPAD_H__
 
@@ -19,7 +22,7 @@
 
 extern void KeypadInit();
 extern uint8_t ScanKeypad();
-extern bool KeyPressed(uint32_t column);
+extern bool KeyPressed(volatile uint32_t column);
 extern void Password();
 
 extern volatile uint32_t rowArray[4];

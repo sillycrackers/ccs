@@ -1,9 +1,17 @@
+// Copyright (c) 2022 Erik Westerveld Incorporated.  All rights reserved.
+// Software License Agreement
+
 #include <stdint.h>
 #include <helpers.h>
 #include <stdlib.h>
 #include <driverlib\sysctl.h>
 
-void delayMs(uint32_t ui32Ms) {
+uint32_t GetNumberOfDigits(volatile uint32_t i)
+{
+    return i > 0 ? (int) log10 ((double) i) + 1 : 1;
+}
+
+void delayMs(volatile uint32_t ui32Ms) {
 
     // 1 clock cycle = 1 / SysCtlClockGet() second
     // 1 SysCtlDelay = 3 clock cycle = 3 / SysCtlClockGet() second
@@ -13,7 +21,7 @@ void delayMs(uint32_t ui32Ms) {
     SysCtlDelay(ui32Ms * (SysCtlClockGet() / 3 / 1000));
 }
 
-void delayUs(uint32_t ui32Us){
+void delayUs(volatile uint32_t ui32Us){
     SysCtlDelay(ui32Us * (SysCtlClockGet() / 3 / 1000000));
 }
 

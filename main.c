@@ -28,12 +28,18 @@ int main(void)
 
     //LCDInit();
     //KeypadInit();
+    UartInit(0, 115200);
 
     volatile uint32_t delay = 1500;
-
+    char str[15];
 
     while(1){
-
+        for(uint32_t i = 0; i < 40000000; i++){
+            sprintf(str,"%u", i);
+            UARTSendString(0, (uint8_t*)str);
+            UARTSendChar(0, '\n');
+            UARTSendChar(0, '\r');
+        }
     }
 
 }
